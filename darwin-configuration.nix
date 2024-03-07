@@ -4,8 +4,8 @@ let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
-
   imports = [ (import "${home-manager}/nix-darwin") ];
+
   users.users.raf = {
     name = "raf";
     home = "/Users/raf";
@@ -13,7 +13,6 @@ in
   home-manager.users.raf = { pkgs, ... }: {
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
-      karabiner-elements
       skhd
       vim
       neovim
@@ -40,6 +39,12 @@ in
       mpv
       jq
     ];
+
+    programs.git = {
+      enable = true;
+      userName = "raf";
+      userEmail = "rraf@tuta.io";
+    };
   };
 
   nix.extraOptions = '' experimental-features = nix-command '';
@@ -49,6 +54,7 @@ in
       nil
       git
       uutils-coreutils-noprefix
+      fortune-kind
       fastfetch
       starship
       zoxide
@@ -97,16 +103,23 @@ in
   system.stateVersion = 4;
   services.yabai.enable = true;
   services.skhd.enable = true;
-  services.karabiner-elements.enable = true;
   environment.loginShell = "${pkgs.fish}/bin/fish";
   environment.variables.SHELL = "${pkgs.fish}/bin/fish";
 
-  system.keyboard.enableKeyMapping = true;
-  system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
     (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     sarasa-gothic
   ];
+
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+  system.defaults.NSGlobalDomain = {
+    ApplePressAndHoldEnabled = false;
+    KeyRepeat = 5;
+    InitialKeyRepeat = 10;
+    AppleKeyboardUIMode = 3;
+    AppleFontSmoothing = 1;
+  };
 }
