@@ -56,7 +56,6 @@ in
       nil
       git
       uutils-coreutils-noprefix
-      fortune-kind
       fastfetch
       starship
       zoxide
