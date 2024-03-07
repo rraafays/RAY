@@ -13,6 +13,7 @@ in
   home-manager.users.raf = { pkgs, ... }: {
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
+      m-cli
       skhd
       vim
       neovim
