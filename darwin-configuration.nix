@@ -1,0 +1,112 @@
+{ pkgs, ... }:
+
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in
+{
+
+  imports = [ (import "${home-manager}/nix-darwin") ];
+  users.users.raf = {
+    name = "raf";
+    home = "/Users/raf";
+  };
+  home-manager.users.raf = { pkgs, ... }: {
+    home.stateVersion = "23.11";
+    home.packages = with pkgs; [
+      karabiner-elements
+      skhd
+      vim
+      neovim
+      cargo
+      du-dust
+      ripgrep
+      p7zip
+      tmux
+      wget
+      nodePackages.sql-formatter
+      jetbrains.idea-community
+      nodePackages.prettier
+      speedtest-rs
+      xmlformat
+      onefetch
+      qrencode
+      python3
+      nodejs
+      mprocs
+      stylua
+      kitty
+      thokr
+      fzf
+      mpv
+      jq
+    ];
+  };
+
+  nix.extraOptions = '' experimental-features = nix-command '';
+
+  environment.systemPackages = with pkgs;
+    [
+      nil
+      git
+      uutils-coreutils-noprefix
+      fastfetch
+      starship
+      zoxide
+      direnv
+      shfmt
+      btop
+      bat
+      lsd
+      xxd
+      duf
+      gh
+
+      dotnet-sdk_8
+      transmission
+      nixpkgs-fmt
+    ];
+
+  services.nix-daemon.enable = true;
+
+  system.defaults = {
+    dock = {
+      autohide = true;
+      autohide-delay = 0.0;
+      minimize-to-application = true;
+      mru-spaces = false;
+      static-only = true;
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      AppleShowAllFiles = true;
+      CreateDesktop = false;
+      FXEnableExtensionChangeWarning = false;
+      FXPreferredViewStyle = "Nlsv";
+      QuitMenuItem = true;
+      ShowPathbar = true;
+      ShowStatusBar = true;
+      _FXShowPosixPathInTitle = true;
+    };
+    loginwindow.GuestEnabled = false;
+    NSGlobalDomain._HIHideMenuBar = true;
+  };
+  programs.zsh.enable = true;
+  programs.fish.enable = true;
+
+  networking.hostName = "RAY";
+  system.stateVersion = 4;
+  services.yabai.enable = true;
+  services.skhd.enable = true;
+  services.karabiner-elements.enable = true;
+  environment.loginShell = "${pkgs.fish}/bin/fish";
+  environment.variables.SHELL = "${pkgs.fish}/bin/fish";
+
+  system.keyboard.enableKeyMapping = true;
+  system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
+  fonts.fontDir.enable = true;
+  fonts.fonts = with pkgs; [
+    (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    sarasa-gothic
+  ];
+}
