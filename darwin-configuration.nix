@@ -9,6 +9,7 @@ in
   users.users.raf = {
     name = "raf";
     home = "/Users/raf";
+    shell = pkgs.fish;
   };
   home-manager.users.raf = { pkgs, ... }: {
     home.stateVersion = "23.11";
@@ -97,15 +98,17 @@ in
     loginwindow.GuestEnabled = false;
     NSGlobalDomain._HIHideMenuBar = true;
   };
-  programs.zsh.enable = true;
+
   programs.fish.enable = true;
+  programs.zsh.enable = true;
+  programs.zsh.interactiveShellInit = ''
+    ${pkgs.fish}/bin/fish -c fish
+  '';
 
   networking.hostName = "RAY";
   system.stateVersion = 4;
   services.yabai.enable = true;
   services.skhd.enable = true;
-  environment.loginShell = "${pkgs.fish}/bin/fish";
-  environment.variables.SHELL = "${pkgs.fish}/bin/fish";
 
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
