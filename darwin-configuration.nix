@@ -14,6 +14,7 @@ in
   home-manager.users.raf = { pkgs, ... }: {
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
+      utm
       m-cli
       skhd
       vim
@@ -101,7 +102,7 @@ in
   programs.fish.enable = true;
   programs.zsh.enable = true;
   programs.zsh.interactiveShellInit = ''
-    ${pkgs.fish}/bin/fish -c fish
+    ${pkgs.fish}/bin/fish -c fish; exit
   '';
 
   networking.hostName = "RAY";
