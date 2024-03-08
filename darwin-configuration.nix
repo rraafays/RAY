@@ -11,9 +11,12 @@ in
     home = "/Users/raf";
     shell = pkgs.fish;
   };
+
   home-manager.users.raf = { pkgs, ... }: {
+    nixpkgs.config.allowUnfree = true;
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
+      raycast
       utm
       m-cli
       skhd
