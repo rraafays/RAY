@@ -111,6 +111,7 @@ in
   networking.hostName = "RAY";
   system.stateVersion = 4;
   services.yabai.enable = true;
+  services.yabai.enableScriptingAddition = true;
   services.skhd.enable = true;
 
   fonts.fontDir.enable = true;
