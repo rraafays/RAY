@@ -65,12 +65,14 @@ in
       zoxide
       direnv
       shfmt
+      watch
       btop
       bat
       lsd
       xxd
       duf
       gh
+      fd
 
       dotnet-sdk_8
       transmission
