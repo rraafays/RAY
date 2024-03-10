@@ -132,4 +132,7 @@ in
     AppleKeyboardUIMode = 3;
     AppleFontSmoothing = 1;
   };
+
+  security.pam.enableSudoTouchIdAuth = true;
+  system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 }
