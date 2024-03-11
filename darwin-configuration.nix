@@ -135,4 +135,11 @@ in
 
   security.pam.enableSudoTouchIdAuth = true;
   system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
+
+  homebrew = {
+    enable = true;
+    casks = [
+      "karabiner-elements"
+    ];
+  };
 }
