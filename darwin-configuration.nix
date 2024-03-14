@@ -6,11 +6,45 @@ in
 {
   imports = [ (import "${home-manager}/nix-darwin") ];
 
+  nix.extraOptions = '' experimental-features = nix-command '';
+  services.nix-daemon.enable = true;
+  networking.hostName = "RAY";
+  system.stateVersion = 4;
+
   users.users.raf = {
     name = "raf";
     home = "/Users/raf";
     shell = pkgs.fish;
   };
+
+  homebrew = {
+    enable = true;
+    casks = [
+      "karabiner-elements"
+      "firefox"
+    ];
+  };
+
+  services.karabiner-elements.enable = true;
+  services.skhd.enable = true;
+  services.yabai = {
+    enable = true;
+    enableScriptingAddition = true;
+  };
+
+  fonts.fontDir.enable = true;
+  fonts.fonts = with pkgs; [
+    (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    sarasa-gothic
+  ];
+
+
+  programs.fish.enable = true;
+  programs.zsh.enable = true;
+  programs.zsh.interactiveShellInit = ''
+    ${pkgs.fish}/bin/fish -c fish; exit
+  '';
 
   home-manager.users.raf = { pkgs, ... }: {
     nixpkgs.config = {
@@ -20,6 +54,7 @@ in
         unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") { };
       };
     };
+
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
       raycast
@@ -57,6 +92,7 @@ in
       userName = "raf";
       userEmail = "rraf@tuta.io";
     };
+
     programs.firefox = {
       enable = true;
       package = null;
@@ -105,8 +141,6 @@ in
     };
   };
 
-  nix.extraOptions = '' experimental-features = nix-command '';
-
   environment.systemPackages = with pkgs;
     [
       nil
@@ -131,68 +165,44 @@ in
       nixpkgs-fmt
     ];
 
-  services.nix-daemon.enable = true;
-
-  system.defaults = {
-    dock = {
-      autohide = true;
-      autohide-delay = 0.0;
-      minimize-to-application = true;
-      mru-spaces = false;
-      static-only = true;
-    };
-    finder = {
-      AppleShowAllExtensions = true;
-      AppleShowAllFiles = true;
-      CreateDesktop = false;
-      FXEnableExtensionChangeWarning = false;
-      FXPreferredViewStyle = "Nlsv";
-      QuitMenuItem = true;
-      ShowPathbar = true;
-      ShowStatusBar = true;
-      _FXShowPosixPathInTitle = true;
-    };
-    loginwindow.GuestEnabled = false;
-    NSGlobalDomain._HIHideMenuBar = true;
-  };
-
-  programs.fish.enable = true;
-  programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = ''
-    ${pkgs.fish}/bin/fish -c fish; exit
-  '';
-
-  networking.hostName = "RAY";
-  system.stateVersion = 4;
-  services.yabai.enable = true;
-  services.yabai.enableScriptingAddition = true;
-  services.skhd.enable = true;
-
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
-    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    sarasa-gothic
-  ];
-
-  system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToControl = true;
-  system.defaults.NSGlobalDomain = {
-    ApplePressAndHoldEnabled = false;
-    KeyRepeat = 5;
-    InitialKeyRepeat = 10;
-    AppleKeyboardUIMode = 3;
-    AppleFontSmoothing = 1;
-  };
-
   security.pam.enableSudoTouchIdAuth = true;
-  system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
+  system = {
+    defaults = {
+      SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
+      loginwindow.GuestEnabled = false;
+      dock = {
+        autohide = true;
+        autohide-delay = 0.0;
+        minimize-to-application = true;
+        mru-spaces = false;
+        static-only = true;
+      };
 
-  homebrew = {
-    enable = true;
-    casks = [
-      "karabiner-elements"
-      "firefox"
-    ];
+      finder = {
+        AppleShowAllExtensions = true;
+        AppleShowAllFiles = true;
+        CreateDesktop = false;
+        FXEnableExtensionChangeWarning = false;
+        FXPreferredViewStyle = "Nlsv";
+        QuitMenuItem = true;
+        ShowPathbar = true;
+        ShowStatusBar = true;
+        _FXShowPosixPathInTitle = true;
+      };
+
+      NSGlobalDomain = {
+        ApplePressAndHoldEnabled = false;
+        KeyRepeat = 2;
+        InitialKeyRepeat = 12;
+        AppleKeyboardUIMode = 3;
+        AppleFontSmoothing = 1;
+        _HIHideMenuBar = true;
+      };
+    };
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToControl = true;
+    };
   };
 }
