@@ -7,6 +7,7 @@ in
   imports = [ (import "${home-manager}/nix-darwin") ];
 
   nix.extraOptions = '' experimental-features = nix-command '';
+  nixpkgs.config.allowUnsupportedSystem = true;
   services.nix-daemon.enable = true;
   networking.hostName = "RAY";
   system.stateVersion = 4;
@@ -104,6 +105,8 @@ in
             vimium
             sponsorblock
             youtube-recommended-videos
+            scroll_anywhere
+            adsum-notabs
           ];
           userChrome = ''
             #TabsToolbar { visibility: collapse !important; }
@@ -143,26 +146,59 @@ in
 
   environment.systemPackages = with pkgs;
     [
-      nil
-      git
-      uutils-coreutils-noprefix
-      fastfetch
-      starship
-      zoxide
-      direnv
-      shfmt
-      watch
+      # shell tools
       btop
-      bat
-      lsd
-      xxd
+      detox
+      du-dust
       duf
+      fastfetch
       gh
-      fd
+      git
+      neovim
+      p7zip
+      rename
+      unzip
+      wget
+      xxd
 
-      dotnet-sdk_8
-      transmission
+      # replacement tools
+      bat
+      fd
+      lsd
+      ripgrep
+      uutils-coreutils-noprefix
+
+      # prompt enhancements
+      direnv
+      starship
+      tmux
+      zoxide
+
+      # formatters
       nixpkgs-fmt
+      nodePackages.prettier
+      nodePackages.sql-formatter
+      rustfmt
+      shfmt
+      stylua
+      xmlformat
+
+      # language servers
+      clang
+      csharp-ls
+      elmPackages.elm-language-server
+      jdt-language-server
+      lemminx
+      ltex-ls
+      lua-language-server
+      nil
+      nodePackages.bash-language-server
+      nodePackages.typescript-language-server
+      python311Packages.python-lsp-server
+      rust-analyzer
+      sqls
+      taplo
+      vscode-langservers-extracted
     ];
 
   security.pam.enableSudoTouchIdAuth = true;
@@ -205,4 +241,7 @@ in
       remapCapsLockToControl = true;
     };
   };
+  system.activationScripts.rosetta.text = ''
+    softwareupdate --install-rosetta --agree-to-license
+  '';
 }
