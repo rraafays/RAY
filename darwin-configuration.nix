@@ -106,7 +106,6 @@ in
             sponsorblock
             youtube-recommended-videos
             scroll_anywhere
-            adsum-notabs
           ];
           userChrome = ''
             #TabsToolbar { visibility: collapse !important; }
