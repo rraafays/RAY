@@ -23,6 +23,7 @@ in
     casks = [
       "karabiner-elements"
       "firefox"
+      "via"
     ];
   };
 
