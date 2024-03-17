@@ -241,7 +241,10 @@ in
       remapCapsLockToControl = true;
     };
   };
+
   system.activationScripts.rosetta.text = ''
     softwareupdate --install-rosetta --agree-to-license
   '';
+
+  nix.gc.automatic = true;
 }
