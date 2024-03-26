@@ -76,7 +76,6 @@ in
       nodePackages.prettier
       speedtest-rs
       xmlformat
-      onefetch
       qrencode
       python3
       nodejs
@@ -87,6 +86,7 @@ in
       fzf
       mpv
       jq
+      nix-your-shell
     ];
 
     programs.git = {
@@ -151,7 +151,6 @@ in
       detox
       du-dust
       duf
-      fastfetch
       gh
       git
       neovim
