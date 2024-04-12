@@ -6,6 +6,7 @@ in
 {
   imports = [ (import "${home-manager}/nix-darwin") ];
 
+  # nix system
   nix.extraOptions = '' experimental-features = nix-command '';
   nixpkgs.config.allowUnsupportedSystem = true;
   services.nix-daemon.enable = true;
@@ -18,6 +19,7 @@ in
     shell = pkgs.fish;
   };
 
+  # brew management
   homebrew = {
     enable = true;
     casks = [
@@ -27,6 +29,7 @@ in
     ];
   };
 
+  # window management, keyboard bindings
   services.karabiner-elements.enable = true;
   services.skhd.enable = true;
   services.yabai = {
@@ -34,6 +37,7 @@ in
     enableScriptingAddition = true;
   };
 
+  # interface fonts
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
@@ -41,13 +45,14 @@ in
     sarasa-gothic
   ];
 
-
+  # fix to make shell fish
   programs.fish.enable = true;
   programs.zsh.enable = true;
   programs.zsh.interactiveShellInit = ''
     ${pkgs.fish}/bin/fish -c fish; exit
   '';
 
+  # home manager
   home-manager.users.raf = { pkgs, ... }: {
     nixpkgs.config = {
       allowUnfree = true;
@@ -59,34 +64,24 @@ in
 
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
-      raycast
-      utm
-      m-cli
-      skhd
-      vim
-      neovim
-      cargo
-      du-dust
-      ripgrep
-      p7zip
-      tmux
-      wget
-      nodePackages.sql-formatter
+      # development tools
       jetbrains.idea-community
-      nodePackages.prettier
-      speedtest-rs
-      xmlformat
-      qrencode
-      python3
-      nodejs
-      mprocs
-      stylua
       kitty
-      thokr
+      utm
+
+      # terminal tools
       fzf
-      mpv
       jq
-      nix-your-shell
+      m-cli
+      mprocs
+      mpv
+      openvpn
+      speedtest-rs
+      thokr
+
+      # interface tools
+      raycast
+      skhd
     ];
 
     programs.git = {
@@ -146,7 +141,7 @@ in
 
   environment.systemPackages = with pkgs;
     [
-      # shell tools
+      # system tools
       btop
       detox
       du-dust
@@ -155,7 +150,11 @@ in
       git
       neovim
       p7zip
+      python3
+      qrencode
       rename
+      ripgrep
+      tmux
       unzip
       wget
       xxd
@@ -169,6 +168,7 @@ in
 
       # prompt enhancements
       direnv
+      nix-your-shell
       starship
       tmux
       zoxide
