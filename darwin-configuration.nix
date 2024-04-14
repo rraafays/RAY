@@ -102,6 +102,7 @@ in
             sponsorblock
             youtube-recommended-videos
             scroll_anywhere
+            darkreader
           ];
           userChrome = ''
             #TabsToolbar { visibility: collapse !important; }
