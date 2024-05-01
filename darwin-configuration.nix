@@ -236,11 +236,6 @@ in
         _HIHideMenuBar = true;
       };
     };
-
-    keyboard = {
-      enableKeyMapping = true;
-      remapCapsLockToControl = true;
-    };
   };
 
   system.activationScripts.rosetta.text = ''
