@@ -111,7 +111,7 @@ in
             }
           '';
           settings = {
-            "browser.startup.homepage" = "https://nixos.org";
+            "browser.startup.homepage" = "https://random.earth/";
             "browser.search.region" = "GB";
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "app.normandy.first_run" = false;
