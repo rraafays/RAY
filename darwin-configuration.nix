@@ -1,148 +1,23 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
 {
-  imports = [ (import "${home-manager}/nix-darwin") ];
+  imports = [ ./home.nix ];
 
-  # nix system
-  nix.extraOptions = '' experimental-features = nix-command '';
-  nixpkgs.config.allowUnsupportedSystem = true;
-  services.nix-daemon.enable = true;
-  networking.hostName = "RAY";
-  system.stateVersion = 4;
-
-  users.users.raf = {
-    name = "raf";
-    home = "/Users/raf";
-    shell = pkgs.fish;
-  };
-
-  # brew management
   homebrew = {
     enable = true;
     casks = [
+      "nikitabobko/tap/aerospace"
       "karabiner-elements"
       "firefox"
-      "via"
+      "raycast"
+      "kitty"
     ];
   };
 
-  # window management, keyboard bindings
-  services.karabiner-elements.enable = true;
-  services.skhd.enable = true;
-  services.yabai = {
-    enable = true;
-    enableScriptingAddition = true;
-  };
-
-  # interface fonts
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    (iosevka-bin.override { variant = "sgr-iosevka-term-curly"; })
-    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    sarasa-gothic
-  ];
-
-  # fix to make shell fish
-  programs.fish.enable = true;
-  programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = ''
-    ${pkgs.fish}/bin/fish -c fish; exit
-  '';
-
-  # home manager
-  home-manager.users.raf = { pkgs, ... }: {
-    nixpkgs.config = {
-      allowUnfree = true;
-      packageOverrides = pkgs: {
-        nur = import (fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
-        unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") { };
-      };
-    };
-
-    home.stateVersion = "23.11";
-    home.packages = with pkgs; [
-      # development tools
-      jetbrains.idea-community
-      kitty
-      utm
-
-      # terminal tools
-      fzf
-      jq
-      m-cli
-      mprocs
-      mpv
-      openvpn
-      speedtest-rs
-      thokr
-
-      # interface tools
-      raycast
-      skhd
-    ];
-
-    programs.git = {
-      enable = true;
-      userName = "raf";
-      userEmail = "rraf@tuta.io";
-    };
-
-    programs.firefox = {
-      enable = true;
-      package = null;
-      profiles = {
-        default = {
-          isDefault = true;
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-            ublock-origin
-            vimium
-            sponsorblock
-            youtube-recommended-videos
-            scroll_anywhere
-            darkreader
-          ];
-          userChrome = ''
-            #TabsToolbar { visibility: collapse !important; }
-            #main-window:not([customizing]) #navigator-toolbox:not(:focus-within):not(:hover){
-                margin-top: -45px;
-            }
-          '';
-          settings = {
-            "browser.startup.homepage" = "https://random.earth/";
-            "browser.search.region" = "GB";
-            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-            "app.normandy.first_run" = false;
-            "app.shield.optoutstudies.enabled" = false;
-            "app.update.channel" = "default";
-            "browser.urlbar.quickactions.enabled" = false;
-            "browser.urlbar.quickactions.showPrefs" = false;
-            "browser.urlbar.shortcuts.quickactions" = false;
-            "browser.urlbar.suggest.quickactions" = false;
-            "dom.forms.autocomplete.formatautofill" = false;
-            "extensions.update.enabled" = false;
-            "extensions.webcompat.enable_picture_in_picture_override" = true;
-            "extensions.webcompat.enable_shims" = true;
-            "extensions.webcompat.perform_injections" = true;
-            "extensions.webcompat.perform_ua_overrides" = true;
-            "privacy.donottrackheader.enabled" = true;
-            "signon.rememberSignons" = false;
-            "browser.formfill.enable" = false;
-            "signon.autofillForms" = false;
-            "extensions.formautofill.addresses.enabled" = false;
-            "extensions.formautofill.creditCards.enabled" = false;
-            "extensions.formautofill.hueristics.enabled" = false;
-          };
-        };
-      };
-    };
-  };
-
+  networking.hostName = "RAY";
+  nixpkgs.config.allowUnsupportedSystem = true;
   environment.systemPackages = with pkgs;
     [
-      # system tools
       btop
       detox
       du-dust
@@ -150,31 +25,24 @@ in
       gh
       git
       neovim
+      nix-your-shell
       p7zip
-      python3
-      qrencode
       rename
-      ripgrep
-      tmux
       unzip
       wget
       xxd
 
-      # replacement tools
       bat
       fd
       lsd
       ripgrep
       uutils-coreutils-noprefix
 
-      # prompt enhancements
       direnv
-      nix-your-shell
       starship
       tmux
       zoxide
 
-      # formatters
       nixpkgs-fmt
       nodePackages.prettier
       nodePackages.sql-formatter
@@ -183,7 +51,6 @@ in
       stylua
       xmlformat
 
-      # language servers
       clang
       csharp-ls
       elmPackages.elm-language-server
@@ -200,6 +67,30 @@ in
       taplo
       vscode-langservers-extracted
     ];
+
+  services.skhd.enable = true;
+
+  nix.settings.trusted-users = [ "@admin" ];
+  nix.configureBuildUsers = true;
+  fonts.fontDir.enable = true;
+  fonts.fonts = with pkgs; [
+    (iosevka-bin.override { variant = "SGr-IosevkaTermCurly"; })
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    sarasa-gothic
+    sarabun-font
+    noto-fonts-emoji
+  ];
+
+  services.nix-daemon.enable = true;
+
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+  users.users.raf.shell = pkgs.fish;
+  users.users.raf.uid = 501;
+  users.users.raf.home = "/Users/raf";
+  users.knownUsers = [ "raf" ];
+
+  system.stateVersion = 4;
 
   security.pam.enableSudoTouchIdAuth = true;
   system = {
@@ -237,10 +128,4 @@ in
       };
     };
   };
-
-  system.activationScripts.rosetta.text = ''
-    softwareupdate --install-rosetta --agree-to-license
-  '';
-
-  nix.gc.automatic = true;
 }
