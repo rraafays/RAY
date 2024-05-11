@@ -16,8 +16,7 @@ in
     };
 
     home.stateVersion = "23.11";
-    home.packages = [
-    ];
+    home.packages = [ pkgs.skhd ];
 
     programs.git = {
       enable = true;
