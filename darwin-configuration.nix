@@ -11,6 +11,7 @@
       "firefox"
       "raycast"
       "kitty"
+      "cursorcerer"
     ];
   };
 
