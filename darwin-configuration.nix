@@ -25,7 +25,7 @@
       duf
       gh
       git
-      neovim
+      lunarvim
       nix-your-shell
       p7zip
       rename
