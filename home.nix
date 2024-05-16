@@ -24,6 +24,7 @@ in
       userEmail = "rraf@tuta.io";
     };
 
+    programs.ssh.enable = true;
     programs.firefox = {
       enable = true;
       package = null;
