@@ -16,7 +16,7 @@ in
     };
 
     home.stateVersion = "23.11";
-    home.packages = [ pkgs.skhd ];
+    home.packages = [ pkgs.skhd pkgs.unstable.jankyborders ];
 
     programs.git = {
       enable = true;
