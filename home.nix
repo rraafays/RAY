@@ -16,7 +16,12 @@ in
     };
 
     home.stateVersion = "23.11";
-    home.packages = [ pkgs.skhd pkgs.unstable.jankyborders ];
+    home.packages = with pkgs; [
+      skhd
+      unstable.jankyborders
+      mpv
+      newsboat
+    ];
 
     programs.git = {
       enable = true;
@@ -37,7 +42,6 @@ in
             sponsorblock
             youtube-recommended-videos
             scroll_anywhere
-            darkreader
           ];
           userChrome = ''
             #TabsToolbar { visibility: collapse !important; }

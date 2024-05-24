@@ -1,8 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-  imports = [ ./home.nix ];
-
+  imports = [ ./home.nix ] ++ lib.optional (builtins.pathExists ./ray.nix) [ ./ray.nix ];
   homebrew = {
     enable = true;
     casks = [
@@ -30,6 +29,7 @@
       p7zip
       rename
       unzip
+      w3m
       wget
       xxd
 
