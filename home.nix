@@ -27,6 +27,9 @@ in
       enable = true;
       userName = "raf";
       userEmail = "rraf@tuta.io";
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
     };
 
     programs.ssh.enable = true;
