@@ -1,7 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ ./home.nix ] ++ lib.optional (builtins.pathExists ./ray.nix) [ ./ray.nix ];
+  imports = [ ./home.nix ./modules/environment/configuration.nix ];
   homebrew = {
     enable = true;
     casks = [
@@ -16,58 +16,6 @@
 
   networking.hostName = "RAY";
   nixpkgs.config.allowUnsupportedSystem = true;
-  environment.systemPackages = with pkgs;
-    [
-      btop
-      detox
-      du-dust
-      duf
-      gh
-      git
-      lunarvim
-      nix-your-shell
-      p7zip
-      rename
-      unzip
-      w3m
-      wget
-      xxd
-
-      bat
-      fd
-      lsd
-      ripgrep
-      uutils-coreutils-noprefix
-
-      direnv
-      starship
-      tmux
-      zoxide
-
-      nixpkgs-fmt
-      nodePackages.prettier
-      nodePackages.sql-formatter
-      rustfmt
-      shfmt
-      stylua
-      xmlformat
-
-      clang
-      csharp-ls
-      elmPackages.elm-language-server
-      jdt-language-server
-      lemminx
-      ltex-ls
-      lua-language-server
-      nil
-      nodePackages.bash-language-server
-      nodePackages.typescript-language-server
-      python311Packages.python-lsp-server
-      rust-analyzer
-      sqls
-      taplo
-      vscode-langservers-extracted
-    ];
 
   services.skhd.enable = true;
 

@@ -1,0 +1,3 @@
+[submodule "modules/environment"]
+	path = modules/environment
+	url = https://github.com/rraafays/environment-nix
