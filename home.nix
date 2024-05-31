@@ -46,6 +46,7 @@ in
             scroll_anywhere
             read-aloud
             darkreader
+            newtab-adapter
           ];
           userChrome = ''
             #TabsToolbar { visibility: collapse !important; }
