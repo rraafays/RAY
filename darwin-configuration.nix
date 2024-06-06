@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./home.nix ./modules/environment/configuration.nix ];
+  imports = [
+    ./home.nix
+    ./modules/environment
+  ];
   homebrew = {
     enable = true;
     casks = [
