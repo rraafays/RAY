@@ -14,6 +14,7 @@
       "raycast"
       "kitty"
       "cursorcerer"
+      "docker"
     ];
   };
 
