@@ -5,6 +5,7 @@
     ./home.nix
     ./modules/environment
   ];
+
   homebrew = {
     enable = true;
     casks = [
