@@ -21,6 +21,7 @@ in
       userEmail = "rraf@tuta.io";
       extraConfig = {
         init.defaultBranch = "main";
+        push.autoSetupRemote = true;
       };
     };
 
