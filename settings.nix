@@ -38,6 +38,47 @@
         AppleFontSmoothing = 1;
         _HIHideMenuBar = true;
       };
+
+      CustomUserPreferences = {
+        "com.apple.commerce".AutoUpdate = true;
+        "com.apple.SoftwareUpdate" = {
+          AutomaticCheckEnabled = true;
+          ScheduleFrequency = 1;
+          AutomaticDownload = 1;
+          CriticalUpdateInstall = 1;
+        };
+
+        "com.apple.finder" = {
+          ShowExternalHardDrivesOnDesktop = false;
+          ShowHardDrivesOnDesktop = false;
+          ShowMountedServersOnDesktop = false;
+          ShowRemovableMediaOnDesktop = false;
+          _FXSortFoldersFirst = true;
+          FXDefaultSearchScope = "SCcf";
+        };
+
+        "com.apple.desktopservices" = {
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores = true;
+        };
+
+        "com.apple.screensaver" = {
+          askForPassword = 1;
+          askForPasswordDelay = 0;
+        };
+
+        "com.apple.AdLib" = {
+          allowApplePersonalizedAdvertising = false;
+        };
+
+        "com.apple.print.PrintingPrefs" = {
+          "Quit When Finished" = true;
+        };
+
+        "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
+        "com.apple.ImageCapture".disableHotPlug = true;
+        "com.doomlaser.cursorcerer".idleHide = 3;
+      };
     };
   };
 }
