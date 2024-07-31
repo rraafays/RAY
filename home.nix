@@ -15,6 +15,9 @@ in
     };
 
     home.stateVersion = "23.11";
+
+    programs.ssh.enable = true;
+
     programs.git = {
       enable = true;
       userName = "raf";
@@ -25,7 +28,6 @@ in
       };
     };
 
-    programs.ssh.enable = true;
     programs.firefox = {
       enable = true;
       package = null;

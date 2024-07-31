@@ -1,6 +1,21 @@
 { config, pkgs, ... }:
 
 {
+  networking.hostName = "RAY";
+  system.stateVersion = 4;
+
+  nix = {
+    settings.trusted-users = [ "@admin" ];
+    configureBuildUsers = true;
+  };
+
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+  users.users.raf.shell = pkgs.fish;
+  users.users.raf.uid = 501;
+  users.users.raf.home = "/Users/raf";
+  users.knownUsers = [ "raf" ];
+
   imports = [
     ./settings.nix
     ./home.nix
@@ -18,46 +33,37 @@
       "kitty"
     ];
   };
-  environment.systemPackages = with pkgs;
-    [
-      nil
-      nixpkgs-fmt
-      bat
-      btop
-      direnv
-      du-dust
-      duf
-      fd
-      gh
-      git
-      killall
-      libqalculate
-      lsd
-      lunarvim
-      nix-your-shell
-      p7zip
-      rename
-      ripgrep
-      starship
-      tmux
-      uutils-coreutils-noprefix
-      wget
-      xxd
-      zoxide
-      jankyborders
-    ];
 
-  networking.hostName = "RAY";
+  environment.systemPackages = with pkgs; [
+    nil
+    nixpkgs-fmt
+    bat
+    btop
+    direnv
+    du-dust
+    duf
+    fd
+    gh
+    git
+    killall
+    libqalculate
+    lsd
+    lunarvim
+    nix-your-shell
+    p7zip
+    rename
+    ripgrep
+    starship
+    tmux
+    uutils-coreutils-noprefix
+    wget
+    xxd
+    zoxide
+    jankyborders
+  ];
+
   services.skhd.enable = true;
-  nix.settings.trusted-users = [ "@admin" ];
-  nix.configureBuildUsers = true;
-
-  programs.fish.enable = true;
-  environment.shells = [ pkgs.fish ];
-  users.users.raf.shell = pkgs.fish;
-  users.users.raf.uid = 501;
-  users.users.raf.home = "/Users/raf";
-  users.knownUsers = [ "raf" ];
+  services.nix-daemon.enable = true;
 
   fonts.packages = with pkgs;
     [
@@ -67,13 +73,6 @@
       sarabun-font
       noto-fonts-emoji
     ];
-
-
-  services.nix-daemon.enable = true;
-
-  system.activationScripts.wallpaper.text = ''
-    osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/System/Library/Desktop Pictures/Solid Colors/Black.png\" as POSIX file"
-  '';
 
   launchd.user.agents.jankyborders = {
     serviceConfig = {
@@ -95,5 +94,4 @@
     };
   };
 
-  system.stateVersion = 4;
 }
