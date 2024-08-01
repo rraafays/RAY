@@ -26,7 +26,7 @@
     casks = [
       "nikitabobko/tap/aerospace"
       "karabiner-elements"
-      "firefox"
+      "brave-browser"
       "raycast"
       "cursorcerer"
       "docker"
