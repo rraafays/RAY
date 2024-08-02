@@ -35,8 +35,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nil
-    nixpkgs-fmt
     bat
     btop
     direnv
