@@ -31,6 +31,7 @@
       "cursorcerer"
       "docker"
       "kitty"
+      "libreoffice"
     ];
   };
 
